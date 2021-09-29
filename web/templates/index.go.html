@@ -1,0 +1,178 @@
+<html>
+
+<head>
+    <title>Sellado de documentos</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <link rel="stylesheet" href="assets/css/uikit.min.css" />
+
+    <script src="assets/js/uikit.min.js"></script>
+    <script src="assets/js/uikit-icons.min.js"></script>
+</head>
+
+<body>
+    <nav class="uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="#">UGR</a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+                <li class="uk-active"><a href="#">Item 1</a></li>
+                <li><a href="#">Item 2</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="uk-section uk-section-default">
+        <div class="uk-container">
+            <h1>Sellado de documentos</h1>
+
+            <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
+                <div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et metus elit. Nam posuere
+                        lobortis odio, id
+                        aliquet arcu rutrum id. Integer hendrerit enim sit amet dui pulvinar pretium. Class aptent
+                        taciti sociosqu
+                        ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in mattis massa.
+                        Mauris
+                        dictum, augue
+                        a mollis fermentum, ligula mauris vehicula diam, non sagittis sapien massa vel ligula. Morbi
+                        varius, nisl
+                        nec vehicula varius, tellus risus accumsan nibh, quis dictum erat mauris a libero. Lorem
+                        ipsum
+                        dolor sit
+                        amet, consectetur adipiscing elit. Maecenas facilisis purus quis ex consectetur, quis
+                        consequat
+                        lacus
+                        ullamcorper.
+                    </p>
+                </div>
+                <div>
+                    <div class="js-upload uk-placeholder uk-text-center uk-text-middle">
+                        <span uk-icon="icon: cloud-upload"></span>
+                        <div uk-form-custom>
+                            <input type="file" multiple>
+                            <span class="uk-link">Seleccione el documento a sellar</span>
+                        </div>
+                        <span>o arrástrelo hasta aquí</span>
+                    </div>
+
+                    <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+
+                    <script>
+
+                        var bar = document.getElementById('js-progressbar');
+
+                        UIkit.upload('.js-upload', {
+
+                            url: '/sign',
+                            multiple: true,
+
+                            beforeSend: function () {
+                                console.log('beforeSend', arguments);
+                            },
+                            beforeAll: function () {
+                                console.log('beforeAll', arguments);
+                            },
+                            load: function () {
+                                console.log('load', arguments);
+                            },
+                            error: function () {
+                                console.log('error', arguments);
+                            },
+                            complete: function () {
+                                console.log('complete', arguments);
+                            },
+
+                            loadStart: function (e) {
+                                console.log('loadStart', arguments);
+
+                                bar.removeAttribute('hidden');
+                                bar.max = e.total;
+                                bar.value = e.loaded;
+                            },
+
+                            progress: function (e) {
+                                console.log('progress', arguments);
+
+                                bar.max = e.total;
+                                bar.value = e.loaded;
+                            },
+
+                            loadEnd: function (e) {
+                                console.log('loadEnd', arguments);
+
+                                bar.max = e.total;
+                                bar.value = e.loaded;
+                            },
+
+                            completeAll: function () {
+                                console.log('completeAll', arguments);
+
+                                setTimeout(function () {
+                                    bar.setAttribute('hidden', 'hidden');
+                                }, 1000);
+                            }
+
+                        });
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-section uk-section-light">
+        <div class="uk-container">
+            <h2 class="uk-text-center">Verifica los documentos sellados</h2>
+            <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
+                <div>
+                    <div class="uk-card uk-card-body uk-card-default ">
+                        <h3 class="uk-card-title">
+                            <span uk-icon="download"></span>
+                            <span>Descarga los certificados</span>
+                        </h3>
+                        <button class="uk-button uk-button-primary">ca.pem</button>
+                        <button class="uk-button uk-button-primary">tsa.pem</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body">
+                        <h3 class="uk-card-title">
+                            <span uk-icon="check"></span>
+                            <span>Verifica con OpenSSL</span>
+                        </h3>
+                        <code>
+                            openssl ts -verify -in <i>timestamped_file</i>
+                            -data <i>original_file</i> 
+                        </code>
+                        <code>
+                            -CAfile ca.pem -untrusted
+                            tsa_cert.pem
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="uk-section uk-section-primary uk-padding-small">
+        <div class="uk-container uk-text-center">
+            Made with
+            <span uk-icon="icon: heart"></span>
+            by
+            <span uk-icon="ratio: 2" class="uk-icon uk-icon-image" style="background-image:
+            url(assets/img/logo-rabbits.png)"></span>
+            <p>
+                Este servicio ha sido implementado como parte del proyecto AMIGA-7.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
