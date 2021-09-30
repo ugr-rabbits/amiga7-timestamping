@@ -8,170 +8,107 @@
 
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
-    <link rel="stylesheet" href="assets/css/uikit.min.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <link rel="stylesheet" href="assets/vendor/fontawesome-free-5.15.4/css/all.min.css" />
 
-    <script src="assets/js/uikit.min.js"></script>
-    <script src="assets/js/uikit-icons.min.js"></script>
+    <script src="assets/vendor/bootstrap-5.1.1/js/bootstrap.min.js"></script>
+    <script src="assets/vendor/fontawesome-free-5.15.4/js/all.min.js"></script>
 </head>
 
 <body>
-    <nav class="uk-navbar-container" uk-navbar>
-        <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="#">UGR</a>
-        </div>
-        <div class="uk-navbar-right">
-            <ul class="uk-navbar-nav">
-                <li class="uk-active"><a href="#">Item 1</a></li>
-                <li><a href="#">Item 2</a></li>
-            </ul>
-        </div>
-    </nav>
+    <header>
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/logo-ugr-horizontal-color.png" height="50px" />
+                </a>
+            </div>
+        </nav>
+    </header>
 
-    <div class="uk-section uk-section-default">
-        <div class="uk-container">
-            <h1>Sellado de documentos</h1>
+    <main>
+        <div class="container py-5">
+            <div class="row pb-2">
+                <h1 class="display-4">Sellado de documentos</h1>
+            </div>
 
-            <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
-                <div>
+            <div class="row row-cols-1 row-cols-md-2 g-5 pb-5">
+                <div class="col">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et metus elit. Nam posuere
-                        lobortis odio, id
-                        aliquet arcu rutrum id. Integer hendrerit enim sit amet dui pulvinar pretium. Class aptent
-                        taciti sociosqu
-                        ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in mattis massa.
-                        Mauris
-                        dictum, augue
-                        a mollis fermentum, ligula mauris vehicula diam, non sagittis sapien massa vel ligula. Morbi
-                        varius, nisl
-                        nec vehicula varius, tellus risus accumsan nibh, quis dictum erat mauris a libero. Lorem
-                        ipsum
-                        dolor sit
-                        amet, consectetur adipiscing elit. Maecenas facilisis purus quis ex consectetur, quis
-                        consequat
-                        lacus
-                        ullamcorper.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius mi nec gravida ultrices.
+                        Morbi a posuere mauris, et mollis magna. Phasellus tempus eget nibh lobortis sollicitudin.
+                        Aliquam viverra nisi at sem egestas, eget vulputate dui egestas. Maecenas sodales commodo
+                        mollis. Maecenas vel lorem vitae dui scelerisque aliquam. Duis scelerisque quam sit amet
+                        ultricies accumsan. Nam non erat non nulla commodo condimentum. Vivamus pellentesque vulputate
+                        lacus vel mollis. Sed semper justo auctor malesuada sagittis. Cras interdum massa quis ipsum
+                        interdum, sed vehicula nunc egestas. Aliquam sit amet iaculis nunc. Aenean nec libero dictum,
+                        aliquet dolor ut, blandit diam. Nulla vitae fringilla lorem, ac pretium justo. Quisque
+                        condimentum, orci nec volutpat tincidunt, urna nisi viverra eros, ac suscipit lectus dui ac
+                        eros. Ut quis venenatis augue.
                     </p>
                 </div>
-                <div>
-                    <div class="js-upload uk-placeholder uk-text-center uk-text-middle">
-                        <span uk-icon="icon: cloud-upload"></span>
-                        <div uk-form-custom>
-                            <input type="file" multiple>
-                            <span class="uk-link">Seleccione el documento a sellar</span>
+                <div class="col d-flex flex-row align-items-center">
+                    <div class="input-group px-5">
+                        <input type="file" class="form-control" id="sign-file-input"
+                            aria-describedby="inputGroupFileAddon04" aria-label="Hola">
+                        <button class="btn btn-outline-primary" type="button" id="sign-file-button"
+                            disabled>Sellar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-5 pb-3">
+                <h2 class="text-center">Comprueba la validez de tus documentos sellados</h2>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 g-5 px-5 pb-5">
+                <div class="col">
+                    <div class="card py-3 h-100">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">
+                                <i class="fas fa-file-download"></i>
+                                <span>Descarga los certificados</span>
+                            </h4>
+                            <div class="container pt-3">
+                                <div class="row text-center">
+                                    <div class="col">
+                                        <button type="button" class="btn
+                                        btn-lg btn-primary">ca.pem</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn
+                                        btn-lg btn-primary">tsa.pem</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <span>o arrástrelo hasta aquí</span>
-                    </div>
-
-                    <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
-
-                    <script>
-
-                        var bar = document.getElementById('js-progressbar');
-
-                        UIkit.upload('.js-upload', {
-
-                            url: '/sign',
-                            multiple: true,
-
-                            beforeSend: function () {
-                                console.log('beforeSend', arguments);
-                            },
-                            beforeAll: function () {
-                                console.log('beforeAll', arguments);
-                            },
-                            load: function () {
-                                console.log('load', arguments);
-                            },
-                            error: function () {
-                                console.log('error', arguments);
-                            },
-                            complete: function () {
-                                console.log('complete', arguments);
-                            },
-
-                            loadStart: function (e) {
-                                console.log('loadStart', arguments);
-
-                                bar.removeAttribute('hidden');
-                                bar.max = e.total;
-                                bar.value = e.loaded;
-                            },
-
-                            progress: function (e) {
-                                console.log('progress', arguments);
-
-                                bar.max = e.total;
-                                bar.value = e.loaded;
-                            },
-
-                            loadEnd: function (e) {
-                                console.log('loadEnd', arguments);
-
-                                bar.max = e.total;
-                                bar.value = e.loaded;
-                            },
-
-                            completeAll: function () {
-                                console.log('completeAll', arguments);
-
-                                setTimeout(function () {
-                                    bar.setAttribute('hidden', 'hidden');
-                                }, 1000);
-                            }
-
-                        });
-
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="uk-section uk-section-light">
-        <div class="uk-container">
-            <h2 class="uk-text-center">Verifica los documentos sellados</h2>
-            <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
-                <div>
-                    <div class="uk-card uk-card-body uk-card-default ">
-                        <h3 class="uk-card-title">
-                            <span uk-icon="download"></span>
-                            <span>Descarga los certificados</span>
-                        </h3>
-                        <button class="uk-button uk-button-primary">ca.pem</button>
-                        <button class="uk-button uk-button-primary">tsa.pem</button>
                     </div>
                 </div>
-                <div>
-                    <div class="uk-card uk-card-default uk-card-body">
-                        <h3 class="uk-card-title">
-                            <span uk-icon="check"></span>
-                            <span>Verifica con OpenSSL</span>
-                        </h3>
-                        <code>
-                            openssl ts -verify -in <i>timestamped_file</i>
-                            -data <i>original_file</i> 
-                        </code>
-                        <code>
-                            -CAfile ca.pem -untrusted
-                            tsa_cert.pem
-                        </code>
+                <div class="col">
+                    <div class="card py-3 h-100">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">
+                                <i class="fas fa-check"></i>
+                                <span>Verifica con OpenSSL</span>
+                            </h4>
+                            <div class="container pt-3">
+                                <code>
+                                    openssl ts -verify -in <i>timestamped_file</i>
+                                    -data <i>original_file</i> -CAfile ca.pem -untrusted tsa.pem
+                                </code>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <footer class="uk-section uk-section-primary uk-padding-small">
-        <div class="uk-container uk-text-center">
-            Made with
-            <span uk-icon="icon: heart"></span>
-            by
-            <span uk-icon="ratio: 2" class="uk-icon uk-icon-image" style="background-image:
-            url(assets/img/logo-rabbits.png)"></span>
-            <p>
-                Este servicio ha sido implementado como parte del proyecto AMIGA-7.
-            </p>
-        </div>
+    <footer class="text-center bg-dark text-light py-4">
+        <p>
+            Este servicio ha sido desarrollado dentro del proyecto AMIGA-7.
+        </p>
+        <span>Made with <i class="fas fa-heart"></i> by </span>
     </footer>
 </body>
 
