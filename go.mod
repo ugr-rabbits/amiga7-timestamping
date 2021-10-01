@@ -2,9 +2,13 @@ module github.com/ugr-rabbits/amiga7-timestamping
 
 go 1.17
 
-require github.com/gin-gonic/gin v1.7.4
+require (
+	github.com/digitorus/timestamp v0.0.0-20210102082646-54ddd7720e27
+	github.com/gin-gonic/gin v1.7.4
+)
 
 require (
+	github.com/digitorus/pkcs7 v0.0.0-20200320092839-808436b6f6d1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect

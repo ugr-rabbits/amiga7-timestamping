@@ -50,8 +50,8 @@
                 <div class="col d-flex flex-row align-items-center">
                     <form id="sign-file-form" action="sign" method="POST" enctype="multipart/form-data">
                         <div class="input-group">
-                            <input type="file" class="form-control" id="sign-file-input" onchange="activateSignButton()"
-                                aria-describedby="sign-file-button" aria-label="Upload">
+                            <input type="file" class="form-control" name="doc" id="sign-file-input"
+                                onchange="activateSignButton()" aria-describedby="sign-file-button" aria-label="Upload">
                             <button class="btn btn-outline-primary" type="button" id="sign-file-button"
                                 onclick="signFile()" disabled>Sellar</button>
                         </div>

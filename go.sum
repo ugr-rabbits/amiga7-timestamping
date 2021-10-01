@@ -1,6 +1,10 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/digitorus/pkcs7 v0.0.0-20200320092839-808436b6f6d1 h1:V1cgDSp4Kq4eMCfazhWyqi2Js7BijkgPnp4Yej9CD9I=
+github.com/digitorus/pkcs7 v0.0.0-20200320092839-808436b6f6d1/go.mod h1:p2IZ9yq2kEKGFr3rfpYxaaOzB0VdLbF8VkZReEIpJmU=
+github.com/digitorus/timestamp v0.0.0-20210102082646-54ddd7720e27 h1:X8tvQGATvS7vQBAPPn0f7nQPcTamu4ecCbRafPrBgik=
+github.com/digitorus/timestamp v0.0.0-20210102082646-54ddd7720e27/go.mod h1:IKw2TcDeMaZrNjpdq7gPc7I+a21+Sn34bUqWrTc70Hs=
 github.com/gin-contrib/sse v0.1.0 h1:Y/yl/+YNO8GZSjAhjMsSuLt29uWRFHdHYUb5lYOV9qE=
 github.com/gin-contrib/sse v0.1.0/go.mod h1:RHrZQHXnP2xjPF+u1gW/2HnVO7nvIa9PG3Gm+fLHvGI=
 github.com/gin-gonic/gin v1.7.4 h1:QmUZXrvJ9qZ3GfWvQ+2wnW/1ePrTEJqPKMYEU3lD/DM=
