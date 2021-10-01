@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"net/http/httputil"
-	"net/url"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,11 +10,6 @@ import (
 const TSA_SERVICE = "http://localhost:2020"
 
 func main() {
-	remote, err := url.Parse(TSA_SERVICE)
-	if err != nil {
-		panic(err)
-	}
-
 	r := gin.Default()
 	r.LoadHTMLGlob("web/templates/*")
 	r.Static("/assets", "web/static")
@@ -30,32 +23,24 @@ func main() {
 	})
 
 	// Proxy download CA certificate
-	r.GET("/certs/ca", func(c *gin.Context) {
-		proxy := httputil.NewSingleHostReverseProxy(remote)
-		proxy.Director = func(req *http.Request) {
-			req.Header = c.Request.Header
-			req.Host = remote.Host
-			req.URL.Scheme = remote.Scheme
-			req.URL.Host = remote.Host
-			req.URL.Path = "/ca.pem"
+	r.GET("/certs/ca.pem", func(c *gin.Context) {
+		resp, err := http.Get(fmt.Sprintf("%s/ca.pem", TSA_SERVICE))
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Unable to request CA certificate from service, err: %s", err.Error()), nil)
 		}
-		proxy.ServeHTTP(c.Writer, c.Request)
+		c.DataFromReader(http.StatusOK, resp.ContentLength, resp.Header.Get("Content-Type"), resp.Body, nil)
 	})
 
 	// Proxy download TSA certificate
-	r.GET("/certs/tsa", func(c *gin.Context) {
-		proxy := httputil.NewSingleHostReverseProxy(remote)
-		proxy.Director = func(req *http.Request) {
-			req.Header = c.Request.Header
-			req.Host = remote.Host
-			req.URL.Scheme = remote.Scheme
-			req.URL.Host = remote.Host
-			req.URL.Path = "/tsa_cert.pem"
+	r.GET("/certs/tsa.pem", func(c *gin.Context) {
+		resp, err := http.Get(fmt.Sprintf("%s/tsa_cert.pem", TSA_SERVICE))
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Unable to request TSA certificate from service, err: %s", err.Error()), nil)
 		}
-		proxy.ServeHTTP(c.Writer, c.Request)
+		c.DataFromReader(http.StatusOK, resp.ContentLength, resp.Header.Get("Content-Type"), resp.Body, nil)
 	})
 
-	// Proxy sign a document
+	// Sign a document
 	r.POST("/sign", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"msg": "Vale crack",

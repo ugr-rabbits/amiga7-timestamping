@@ -48,12 +48,32 @@
                     </p>
                 </div>
                 <div class="col d-flex flex-row align-items-center">
-                    <div class="input-group px-5">
-                        <input type="file" class="form-control" id="sign-file-input" aria-describedby="sign-file-button"
-                            aria-label="Upload">
-                        <button class="btn btn-outline-primary" type="button" id="sign-file-button"
-                            disabled>Sellar</button>
-                    </div>
+                    <form id="sign-file-form" action="sign" method="POST" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="sign-file-input" onchange="activateSignButton()"
+                                aria-describedby="sign-file-button" aria-label="Upload">
+                            <button class="btn btn-outline-primary" type="button" id="sign-file-button"
+                                onclick="signFile()" disabled>Sellar</button>
+                        </div>
+
+                        <script>
+                            signForm = document.getElementById("sign-file-form");
+                            signInput = document.getElementById("sign-file-input");
+                            signButton = document.getElementById("sign-file-button");
+
+                            function activateSignButton() {
+                                if (signInput.value != "") {
+                                    if (signButton.hasAttribute("disabled")) {
+                                        signButton.removeAttribute("disabled");
+                                    }
+                                }
+                            }
+
+                            function signFile() {
+                                signForm.submit();
+                            }
+                        </script>
+                    </form>
                 </div>
             </div>
 
@@ -72,12 +92,12 @@
                             <div class="container pt-3">
                                 <div class="row g-3 text-center">
                                     <div class="col">
-                                        <a href="certs/ca" download="ca.pem">
+                                        <a href="certs/ca.pem" download="ca.pem">
                                             <button type="button" class="btn btn-lg btn-primary">ca.pem</button>
                                         </a>
                                     </div>
                                     <div class="col">
-                                        <a href="certs/tsa" download="tsa.pem">
+                                        <a href="certs/tsa.pem" download="tsa.pem">
                                             <button type="button" class="btn btn-lg btn-primary">tsa.pem</button>
                                         </a>
                                     </div>
