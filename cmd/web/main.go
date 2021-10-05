@@ -2,16 +2,25 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	ts "github.com/digitorus/timestamp"
 	"github.com/gin-gonic/gin"
 )
 
-const TSA_SERVICE = "http://localhost:2020"
-
 func main() {
+	tsaHost := flag.String("host", "http://localhost", "TSA service's hostname")
+	tsaPort := flag.Int("port", 318, "TSA service's port number")
+	flag.Parse()
+
+	tsaURL, err := url.Parse(fmt.Sprintf("%s:%d", *tsaHost, *tsaPort))
+	if err != nil {
+		panic("Not a valid URL")
+	}
+
 	r := gin.Default()
 	r.LoadHTMLGlob("web/templates/*")
 	r.Static("/assets", "web/static")
@@ -26,7 +35,7 @@ func main() {
 
 	// Proxy download CA certificate
 	r.GET("/certs/ca.pem", func(c *gin.Context) {
-		resp, err := http.Get(fmt.Sprintf("%s/ca.pem", TSA_SERVICE))
+		resp, err := http.Get(fmt.Sprintf("%s/ca.pem", tsaURL.String()))
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Unable to request CA certificate from service, err: %s", err.Error()), nil)
 		}
@@ -35,7 +44,7 @@ func main() {
 
 	// Proxy download TSA certificate
 	r.GET("/certs/tsa.pem", func(c *gin.Context) {
-		resp, err := http.Get(fmt.Sprintf("%s/tsa_cert.pem", TSA_SERVICE))
+		resp, err := http.Get(fmt.Sprintf("%s/tsa_cert.pem", tsaURL.String()))
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Unable to request TSA certificate from service, err: %s", err.Error()), nil)
 		}
@@ -54,7 +63,7 @@ func main() {
 			panic(err)
 		}
 
-		req, err := http.NewRequest(http.MethodGet, TSA_SERVICE, bytes.NewReader(tsReq))
+		req, err := http.NewRequest(http.MethodGet, tsaURL.String(), bytes.NewReader(tsReq))
 		if err != nil {
 			panic(err)
 		}
