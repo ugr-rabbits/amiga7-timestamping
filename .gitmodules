@@ -1,0 +1,6 @@
+[submodule "bootstrap"]
+	path = web/static/vendor/bootstrap
+	url = git@github.com:twbs/bootstrap.git
+[submodule "fontawesome"]
+	path = web/static/vendor/fontawesome
+	url = git@github.com:fortawesome/font-awesome
