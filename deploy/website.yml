@@ -1,0 +1,35 @@
+---
+- name: Deploy time-stamping website
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Create docker network
+      docker_network:
+        name: amiga7_default
+
+    - name: Run utsa container
+      docker_container:
+        name: amiga7_tsa
+        image: ghcr.io/varrrro/utsa:latest
+        detach: true
+        networks_cli_compatible: true
+        networks:
+          - name: amiga7_default
+        volumes:
+          - "../configs/utsa.conf:/etc/utsa/utsa.conf"
+          - "../certs:/etc/utsa/pki"
+        command: "-c /etc/utsa/utsa.conf"
+
+    - name: Run website container
+      docker_container:
+        name: amiga7_website
+        image: ghcr.io/ugr-rabbits/amiga7-ts-website:latest
+        detach: true
+        networks_cli_compatible: true
+        networks:
+          - name: bridge
+          - name: amiga7_default
+        ports:
+          - "8000:8000"
+        command: "-host http://amiga7_tsa -port 2020"
