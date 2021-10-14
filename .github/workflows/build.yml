@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: amiga7-ts-website
+  IMAGE_NAME: ugr-rabbits/amiga7-ts-website
 
 jobs:
   build:
