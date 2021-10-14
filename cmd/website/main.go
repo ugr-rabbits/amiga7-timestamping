@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 
@@ -18,7 +19,7 @@ func main() {
 
 	tsaURL, err := url.Parse(fmt.Sprintf("%s:%d", *tsaHost, *tsaPort))
 	if err != nil {
-		panic("Not a valid URL")
+		log.Fatal("Not a valid URL")
 	}
 
 	r := gin.Default()
@@ -55,23 +56,23 @@ func main() {
 	r.POST("/sign", func(c *gin.Context) {
 		file, header, err := c.Request.FormFile("doc")
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 
 		tsReq, err := ts.CreateRequest(file, nil)
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 
 		req, err := http.NewRequest(http.MethodGet, tsaURL.String(), bytes.NewReader(tsReq))
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 		req.Header.Set("Content-Type", "application/timestamp-query")
 
 		tsResp, err := http.DefaultClient.Do(req)
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 
 		c.DataFromReader(http.StatusOK, tsResp.ContentLength, tsResp.Header.Get("Content-Type"), tsResp.Body, map[string]string{
@@ -79,5 +80,7 @@ func main() {
 		})
 	})
 
-	r.Run(":8000")
+	if err := r.Run(":8000"); err != nil {
+		log.Fatal(err)
+	}
 }
